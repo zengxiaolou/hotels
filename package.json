@@ -19,7 +19,7 @@
     "init:all": "yarn install && cd app/renderer && yarn install"
   },
   "keywords": [
-    "auto order",
+    "auto order"
   ],
   "husky": {
     "hooks": {
