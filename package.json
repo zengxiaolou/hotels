@@ -1,0 +1,128 @@
+{
+  "name": "xc",
+  "version": "1.0.0",
+  "description": "auto order",
+  "main": "app/build/index.js",
+  "scripts": {
+    "build:main": "tsc -p app/main/tsconfig.json && babel app/dist --out-dir app/build && rimraf app/dist",
+    "build:renderer": "cd app/renderer && yarn build",
+    "start:win": "concurrently \"yarn run start:render:win\" \"wait-on http://127.0.0.1:3062 && yarn run build:main && yarn run start:main\"",
+    "start:mac": "concurrently \"yarn run start:render:mac\" \"wait-on http://127.0.0.1:3062 && yarn run build:main && yarn run start:main\"",
+    "start:main": "electron --inspect=9284 app/build/index.js",
+    "start:render:win": "cd app/renderer && yarn start:win",
+    "start:render:mac": "cd app/renderer && yarn start:mac",
+    "dist": "rimraf build && yarn build:main && yarn build:renderer &&  electron-builder --mac --win",
+    "dist:mac": "rimraf build && yarn build:main && yarn build:renderer &&  electron-builder --mac",
+    "dist:win": "rimraf build && yarn build:main && yarn build:renderer &&  electron-builder  --win",
+    "dist:linux": "rimraf build && yarn build:main && yarn build:renderer &&  electron-builder --linux ",
+    "babel": "babel app/dist --out-dir app/build",
+    "init:all": "yarn install && cd app/renderer && yarn install"
+  },
+  "keywords": [
+    "auto order",
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,json,css,less}": [
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix --cache --quiet "
+    ],
+    "*.{css,less}": [
+      "stylelint  --fix --cache"
+    ]
+  },
+  "author": "none",
+  "license": "ISC",
+  "_moduleAliases": {
+    "@": "app/build"
+  },
+  "build": {
+    "appId": "com.ruler.xc",
+    "productName": "xc",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "app/build/**/*",
+      "app/renderer/build/**/*",
+      "assets/**/*"
+    ],
+    "mac": {
+      "icon": "assets/icon.png"
+    },
+    "win": {
+      "icon": "assets/icon.ico"
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "target": [
+        "deb"
+      ]
+    }
+  },
+  "dependencies": {
+    "active-win": "^8.1.1",
+    "dotenv": "^16.3.1",
+    "electron-is-dev": "^2.0.0",
+    "electron-store": "^8.1.0",
+    "jsdom": "^22.1.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.9.7",
+    "play-sound": "^1.1.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.3",
+    "@babel/preset-env": "^7.23.3",
+    "@types/big.js": "^6.2.2",
+    "@types/jsdom": "^21.1.4",
+    "@types/node": "^20.8.7",
+    "@types/node-schedule": "^2.1.5",
+    "@types/nodemailer": "^6.4.14",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.10",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "@typescript-eslint/parser": "5.62.0",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "concurrently": "^8.2.1",
+    "electron": "^28.1.1",
+    "electron-builder": "^24.6.4",
+    "electron-rebuild": "^3.2.9",
+    "electron-reloader": "^1.2.3",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-complexity": "^1.0.2",
+    "eslint-plugin-electron": "^7.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jest": "^27.4.3",
+    "eslint-plugin-jsdoc": "^46.8.2",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-optimize-regex": "^1.2.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-security": "^1.7.1",
+    "eslint-plugin-unicorn": "^48.0.1",
+    "husky": "^8.0.3",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.3",
+    "react-devtools": "^4.28.4",
+    "stylelint": "^15.11.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-standard": "^34.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "wait-on": "^7.0.1"
+  }
+}
