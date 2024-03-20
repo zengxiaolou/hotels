@@ -4,8 +4,15 @@ import { BrowserWindow } from 'electron';
 import isDev from 'electron-is-dev';
 import { MAIN_PAGE_DIRECTION } from '@/pages/main/const';
 import { stateManager } from '@/components/singletons';
+import { registerIpcHandler } from '@/pages/main/ipc-handlers';
 
 let win = stateManager.getMainWindow();
+
+const init = () => {
+  registerIpcHandler();
+};
+
+init();
 
 function create() {
   win = new BrowserWindow({

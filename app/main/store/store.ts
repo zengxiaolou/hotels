@@ -1,4 +1,5 @@
 import Store from 'electron-store';
+import { StoreKey } from '@/types/enum';
 
 class StoreManager {
   private static instance: StoreManager;
@@ -10,13 +11,11 @@ class StoreManager {
   }
 
   private initDefaults() {
-    this.store.set('start', false);
-    this.store.set('currentType', 'today');
-    if (!this.store.get('url')) {
-      this.store.set('url', '/act/credit/wreport/getupdata.action');
+    if (!this.store.get(StoreKey.LOGIN)) {
+      this.store.set(StoreKey.LOGIN, true);
     }
-    if (!this.store.get('website')) {
-      this.store.set('website', 'https://www.yaxin222.net');
+    if (!this.store.get(StoreKey.WAIT_TIME)) {
+      this.store.set(StoreKey.WAIT_TIME, 5);
     }
   }
 

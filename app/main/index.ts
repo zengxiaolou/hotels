@@ -12,6 +12,7 @@ app
     dotenv.config();
     mainWindow = create();
     await createTray(mainWindow);
+    // await createSpider()
   })
   // eslint-disable-next-line unicorn/prefer-top-level-await
   .catch(error => {
